@@ -11,6 +11,8 @@ mod views {
 
     pub mod pages {
         pub mod home_view;
+        pub mod about_view;
+        pub mod projects_view;
     }
 }
 
@@ -19,6 +21,8 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .service(handlers::index_handler)
+            .service(handlers::about_handler)
+            .service(handlers::projects_handler)
             .service(handlers::res_dir_handler())
     })
         .bind(("0.0.0.0", 8080))?

@@ -34,7 +34,7 @@ fn head(state: &LayoutState) -> Markup {
             meta name="viewport" content="width=device-width";
             title {
                 @if let Some(t) = state.title {
-                    (t)
+                    "Joshua Ibrom | " (t)
                 } @else {
                     "Joshua Ibrom"
                 }
