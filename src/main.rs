@@ -1,12 +1,21 @@
-use actix_web::{get, App, HttpServer, Result as AwResult };
-use maud::{html, Markup};
+use actix_web::{get, App, HttpServer, Result as AwResult};
+use comrak::{markdown_to_html, Options as CkOptions};
+use maud::{html, Markup, PreEscaped, Render};
+
+struct Markdown<T>(T);
+
+impl<T: AsRef<str>> Render for Markdown<T> {
+    fn render(&self) -> Markup {
+        PreEscaped(markdown_to_html(self.0.as_ref(), &CkOptions::default()))
+    }
+}
 
 #[get("/")]
 async fn hello() -> AwResult<Markup> {
     Ok(html! {
         html {
             body {
-                h1 { "Hello, world!" }
+                h1 { (Markdown("Hello, world! _Ital_.")) }
             }
         }
     })
