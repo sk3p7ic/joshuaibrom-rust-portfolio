@@ -1,7 +1,6 @@
-use actix_files as afs;
-use actix_web::{get, App, HttpServer, Result as AwResult};
-use maud::{html, Markup};
+use actix_web::{App, HttpServer};
 
+mod handlers;
 mod views {
     pub mod base_layout;
     pub mod renderers;
@@ -11,19 +10,12 @@ mod views {
     }
 }
 
-#[get("/")]
-async fn index_handler() -> AwResult<Markup> {
-    use views::base_layout::{layout, LayoutState};
-    let body = html! { h1 { (views::renderers::Markdown("Hello, world! _Ital_.")) } };
-    Ok(layout(body, LayoutState { title: None }))
-}
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(index_handler)
-            .service(afs::Files::new("/res", "./public/res"))
+            .service(handlers::index_handler)
+            .service(handlers::res_dir_handler())
     })
         .bind(("0.0.0.0", 8080))?
         .run()
