@@ -1,8 +1,15 @@
-use actix_web::{get, App, HttpServer, Responder};
+use actix_web::{get, App, HttpServer, Result as AwResult };
+use maud::{html, Markup};
 
 #[get("/")]
-async fn hello() -> impl Responder {
-    format!("Hello, world!\nThis will be my portfolio site.")
+async fn hello() -> AwResult<Markup> {
+    Ok(html! {
+        html {
+            body {
+                h1 { "Hello, world!" }
+            }
+        }
+    })
 }
 
 #[actix_web::main]
