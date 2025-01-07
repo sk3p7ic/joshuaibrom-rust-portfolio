@@ -1,4 +1,6 @@
-use maud::{html, Markup};
+use maud::{DOCTYPE, html, Markup};
+
+use crate::views::renderers;
 
 pub struct LayoutState {
     pub route: &'static str,
@@ -7,12 +9,15 @@ pub struct LayoutState {
 
 pub fn layout(children: Markup, state: LayoutState) -> Markup {
     html! {
-        (head(&state))
-        body {
-            (header())
-            h1 { "Base layout." }
-            (children)
-            (footer())
+        (DOCTYPE)
+        html {
+            (head(&state))
+            body {
+                (header())
+                h1 class="underline" { "Base layout." }
+                (children)
+                (footer())
+            }
         }
     }
 }
@@ -27,6 +32,7 @@ fn head(state: &LayoutState) -> Markup {
                     "Joshua Ibrom"
                 }
             }
+            (renderers::Css("/res/css/globals.css"))
         }
     }
 }
