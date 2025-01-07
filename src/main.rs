@@ -8,6 +8,10 @@ mod views {
     pub mod components {
         pub mod header;
     }
+
+    pub mod pages {
+        pub mod home_view;
+    }
 }
 
 #[actix_web::main]

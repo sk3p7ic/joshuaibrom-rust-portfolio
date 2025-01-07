@@ -22,4 +22,8 @@
     header nav a:hover {
         @apply text-poimandres-brightYellow;
     }
+
+    section.home-section {
+        @apply mx-auto px-8 w-full lg:w-3/4
+    }
 }
