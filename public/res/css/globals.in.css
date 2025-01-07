@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    header {
+        @apply flex flex-row justify-between items-center gap-4 px-8 fixed top-0 left-0 right-0 transition-colors;
+    }
+
+    header nav {
+        @apply flex flex-row gap-4;
+    }
+
+    header nav a {
+        @apply text-poimandres-white transition-colors lg:text-lg;
+    }
+
+    header nav a.current-page {
+        @apply text-poimandres-lightBlue;
+    }
+
+    header nav a:hover {
+        @apply text-poimandres-brightYellow;
+    }
+}

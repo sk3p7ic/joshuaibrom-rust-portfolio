@@ -1,21 +1,26 @@
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 
 use crate::views::renderers;
+use crate::views::components::header::header as header_component;
+
+pub const HEADER_HEIGHT: u8 = 72;
 
 pub struct LayoutState {
-    pub route: &'static str,
     pub title: Option<&'static str>
 }
 
 pub fn layout(children: Markup, state: LayoutState) -> Markup {
+    let style = format!("padding-top: {HEADER_HEIGHT}px;");
+
     html! {
         (DOCTYPE)
         html {
             (head(&state))
-            body {
-                (header())
-                h1 class="underline" { "Base layout." }
-                (children)
+            body .bg-poimandres-bg.text-poimandres-white.min-h-screen.flex.flex-col {
+                (header(HEADER_HEIGHT))
+                .grow style=(style) {
+                    (children)
+                }
                 (footer())
             }
         }
@@ -25,6 +30,8 @@ pub fn layout(children: Markup, state: LayoutState) -> Markup {
 fn head(state: &LayoutState) -> Markup {
     html! {
         head {
+            meta charset="utf-8";
+            meta name="viewport" content="width=device-width";
             title {
                 @if let Some(t) = state.title {
                     (t)
@@ -41,12 +48,16 @@ fn head(state: &LayoutState) -> Markup {
     }
 }
 
-fn header() -> Markup {
-    html! {}
+fn header(header_height: u8) -> Markup {
+    html! {
+        (header_component(header_height))
+    }
 }
 
 fn footer() -> Markup {
     html! {
-        footer { "Joshua Ibrom, 2025" }
+        footer .mt-24.py-4.text-center.border-t.border-t-poimandres-darkerGray {
+            "Joshua Ibrom, 2025"
+        }
     }
 }
