@@ -2,6 +2,10 @@ use actix_web::{get, App, HttpServer, Result as AwResult};
 use comrak::{markdown_to_html, Options as CkOptions};
 use maud::{html, Markup, PreEscaped, Render};
 
+mod views {
+    pub mod base_layout;
+}
+
 struct Markdown<T>(T);
 
 impl<T: AsRef<str>> Render for Markdown<T> {
@@ -12,13 +16,9 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 #[get("/")]
 async fn hello() -> AwResult<Markup> {
-    Ok(html! {
-        html {
-            body {
-                h1 { (Markdown("Hello, world! _Ital_.")) }
-            }
-        }
-    })
+    use views::base_layout::{layout, LayoutState};
+    let body = html! { h1 { (Markdown("Hello, world! _Ital_.")) } };
+    Ok(layout(body, LayoutState { route: "/", title: None }))
 }
 
 #[actix_web::main]
