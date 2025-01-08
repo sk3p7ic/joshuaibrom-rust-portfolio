@@ -6,6 +6,7 @@ mod views {
     pub mod renderers;
 
     pub mod components {
+        pub mod common;
         pub mod header;
     }
 
