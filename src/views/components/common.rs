@@ -1,5 +1,7 @@
 use maud::{html, Markup};
 
+use crate::views::renderers;
+
 pub fn hero() -> Markup {
     html! {
         div #hero {
@@ -58,5 +60,13 @@ pub fn main_section_divider(title: &'static str) -> Markup {
             h3 class="flex items-center justify-center text-2xl md:text-4xl lg:text-5xl text-poimandres-brightMint h-[72px]" { (title) }
             hr .border-poimandres-lowerBlue;
         }
+    }
+}
+
+pub fn about_statement() -> Markup {
+    let copy = include_str!("AboutStatement.md");
+    let markdown = renderers::Markdown(copy);
+    html! {
+        (markdown)
     }
 }

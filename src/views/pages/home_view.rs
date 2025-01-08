@@ -12,8 +12,9 @@ pub fn page() -> Markup {
                 }
             }
             section #about-me.home-section {
-                div .flex.flex-col.gap-12 {
+                div .flex.flex-col.gap-8 {
                     (common::main_section_divider("About"))
+                    (common::about_statement())
                 }
             }
         }
